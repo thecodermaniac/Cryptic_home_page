@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Coin from "./Coin";
 
-const CoverComp = () => {
+const CoverComp = (props) => {
+  function handleBackClick() {
+    props.scrollTo.current.scrollIntoView({ behavior: 'smooth' })
+  }
   const [coins, setCoins] = useState([]);
 
   const options = {
@@ -39,14 +42,14 @@ const CoverComp = () => {
       <div className="cover_top">
         <h1>Invest in IDOs like a pro.</h1>
         <p>Become a subscriber and know beforehand which ido to invest in</p>
-        <button className="yellow_button">Register Now</button>
+        <button className="yellow_button" onClick={handleBackClick}>Register Now</button>
       </div>
 
       <div className="cover_middle cover_grid">
         {coins.length > 0 ? (
           coins.map((coin) => {
             return (
-              <Coin 
+              <Coin
                 key={coin.item.coin_id}
                 name={coin.item.name}
                 image={coin.item.thumb}

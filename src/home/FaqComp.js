@@ -2,7 +2,10 @@ import React,{useState} from 'react'
 
 import FaqChild from "./FaqChild";
 
-const FaqComp = () => {
+const FaqComp = (props) => {
+	function handleBackClick() {
+		props.scrollTo.current.scrollIntoView({ behavior: 'smooth' })
+	  }
 
 	const [data, set_data] = useState([
 
@@ -21,7 +24,7 @@ const FaqComp = () => {
 		])
 
 	return (
-		<div >
+		<div className='faq_items'>
 				
 			<div className="faq_comp">
 			<h1>FAQ </h1>
@@ -45,9 +48,9 @@ const FaqComp = () => {
 				<h1>Start Trading Now</h1>
 
 				<div className="row_faq">
-					<button className="yellow_button">Register Now</button>
+					<button className="yellow_button" onClick={handleBackClick}>Register Now</button>
 
-					<button >Trade Now</button>
+					<button onClick={handleBackClick}>Trade Now</button>
 				</div>
 			</div>
 
