@@ -455,6 +455,17 @@ input {
   border-radius: 10px;
 }
 
+.passwordHolder {
+display: flex;
+align-items: center;
+}
+
+
+.showicon{
+  font-size: 27px;
+  border-radius: 0 10px 10px 0;
+}
+
 button {
   border: none;
   background-color: white;

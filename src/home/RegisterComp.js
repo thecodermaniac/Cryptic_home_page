@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Button } from "semantic-ui-react";
 import { useForm } from "react-hook-form";
+import { FiEye } from "react-icons/fi"
+import { FiEyeOff } from "react-icons/fi"
+import axios from "axios";
 
 export const Register = (props) => {
+  const [showpass, setShow] = useState(true)
   const {
     register,
     handleSubmit,
@@ -10,6 +14,13 @@ export const Register = (props) => {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
+    axios.post('http://localhost:5000/usercrypto', data).then((res) => {
+      console.log(res);
+      localStorage.setItem('crypticUser', JSON.stringify(res.data.user))
+    }).catch((error) => {
+      alert(error.message)
+    })
+
   };
   return (
     <div className="auth-form-container">
@@ -39,14 +50,18 @@ export const Register = (props) => {
         {errors.email && <p className="error-paragraph">Please check the Email</p>}
         <Form.Field>
           <label>Password</label>
-          <input
-            placeholder="Password"
-            type="password"
-            {...register("password", {
-              required: true,
-              pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/,
-            })}
-          />
+          <span className="passwordHolder">
+            <input
+              placeholder="Password"
+              type={showpass ? 'password' : 'text'}
+              {...register("password", {
+                required: true,
+                pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/,
+              })}
+            />
+            {showpass && <FiEye className="showicon" onClick={() => setShow(false)} />}
+            {!showpass && <FiEyeOff className="showicon" onClick={() => setShow(true)} />}
+          </span>
         </Form.Field>
         {errors.password && <p className="error-paragraph">Please check the Password</p>}
         <Button type="submit">Register</Button>
